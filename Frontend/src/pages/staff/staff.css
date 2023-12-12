@@ -1,0 +1,89 @@
+
+.staff{
+    margin: 5%;
+}
+.stafftop{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.staff_shifts{
+    font-weight: 900;
+    font-size: 18px;
+    color: #555;
+}
+.staff_name{
+    font-weight: 900;
+    cursor: pointer;
+
+}
+
+.staff_profile{
+    position: relative;
+    width: 200px;
+}
+.staff_account{
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    position: absolute;
+    top: -3;
+    background-color: rgb(97, 128, 167); 
+    color: #fff;
+    padding: 20px;
+     
+     margin-right: 20px;
+}
+
+.staff_account span{
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.staff_account span:hover{
+   color: #aaa;
+}
+.staff_main{
+    margin-top: 20px;
+}
+
+.profile_icon{
+    margin-right: 10px;
+}
+
+.staff_icon{
+    display: flex;
+    align-items: center;
+}
+
+table{
+    width: 100%;
+}
+tr{
+    height: 50px;
+    cursor: pointer;
+}
+tr:nth-child(even) {
+    background-color: #1dbf730f;
+  }
+td{
+
+}
+th{
+    text-align: left;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 600px) {
+    th, td {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    th, td {
+      text-align: center;
+    }
+  }
+

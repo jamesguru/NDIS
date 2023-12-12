@@ -1,0 +1,14 @@
+.myshifts{
+    margin: 5% 10%;
+
+}
+.myshifts_top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.myshifts_header{
+    font-weight: 900;
+    color: #444;
+    margin-bottom: 30px;
+}
