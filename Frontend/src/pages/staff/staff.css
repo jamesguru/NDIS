@@ -11,7 +11,7 @@
 }
 .staff_shifts{
     font-weight: 900;
-    font-size: 18px;
+    
     color: #555;
 }
 .staff_name{
@@ -32,9 +32,8 @@
     top: -3;
     background-color: rgb(97, 128, 167); 
     color: #fff;
-    padding: 20px;
-     
-     margin-right: 20px;
+    padding: 20px;    
+    margin-right: 20px;
 }
 
 .staff_account span{

@@ -23,7 +23,8 @@ const Staff = () => {
 
           {profile && (
             <div className="staff_account">
-              <span>My account</span>
+              <span>My Account</span>
+              <span>My Statements</span>
               <Link to="/myshifts">
                 <span>Shifts</span>
               </Link>
