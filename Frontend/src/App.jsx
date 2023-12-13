@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Admin from "./pages/admin/Admin";
 import Staff from "./pages/staff/Staff";
 import MyShifts from "./pages/MyShifts/MyShifts";
+import Shift from "./pages/shift/Shift";
 function App() {
   const router = createBrowserRouter([
  
@@ -31,7 +32,7 @@ function App() {
         },
         {
           path: "/shift/:id",
-          element: <MyShifts />,
+          element: <Shift />,
         }
       
   ]);

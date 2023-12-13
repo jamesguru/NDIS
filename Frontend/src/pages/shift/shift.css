@@ -1,0 +1,56 @@
+.shift{
+    margin: 3% 10%;
+    display: flex;
+   
+}
+
+.shift_details{
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px;
+    height: auto;
+    background-color: #1dbf730f;
+}
+.shift_details ul{
+    list-style: none;
+}
+strong{
+    margin-right: 10px;
+}
+
+.add_casenotes{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
+   
+}
+.add_casenotes span{
+   
+    margin-right: 20px;
+}
+.add_casenotes_icon{
+    cursor: pointer;
+}
+
+.casenotes_inputs{
+    display: flex;
+    flex-direction: column;
+}
+.casenotes_inputs label{
+    font-weight: 900;
+}
+.casenotes_inputs button{
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(24 92 175);  
+    color: #fff;
+}
+
+.shift_casenotes{
+    flex: 1;
+}

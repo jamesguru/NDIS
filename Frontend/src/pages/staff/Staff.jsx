@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./staff.css";
 import { FaUser } from "react-icons/fa";
+import { AiOutlineEye } from 'react-icons/ai';
 const Staff = () => {
   const [profile, setProfile] = useState(false);
   const handleProfile = () => {
@@ -11,7 +12,7 @@ const Staff = () => {
   return (
     <div className="staff">
       <div className="stafftop">
-        <span className="staff_shifts">My Shifts</span>
+        <span className="staff_shifts">My Shifts(10)</span>
 
         <div className="staff_profile">
           <div className="staff_icon">
@@ -48,6 +49,7 @@ const Staff = () => {
               <th>Duration</th>
               <th>Status</th>
               <th>Notes</th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody>
@@ -59,6 +61,10 @@ const Staff = () => {
               <td>8 hours</td>
               <td>Scheduled</td>
               <td>No special notes</td>
+              <Link to="/shift/1256">
+              <AiOutlineEye />
+              </Link>
+              
             </tr>
             <tr>
               <td>2</td>
@@ -68,6 +74,10 @@ const Staff = () => {
               <td>8 hours</td>
               <td>Ongoing</td>
               <td>Lunch break at 5:00 PM</td>
+              <Link to="/shift/1256">
+              <AiOutlineEye />
+              </Link>
+              
             </tr>
 
             <tr>
@@ -78,6 +88,10 @@ const Staff = () => {
               <td>8 hours</td>
               <td>Scheduled</td>
               <td>Team meeting</td>
+              <Link to="/shift/1256">
+              <AiOutlineEye />
+              </Link>
+              
             </tr>
             <tr>
               <td>4</td>
@@ -87,6 +101,10 @@ const Staff = () => {
               <td>8 hours</td>
               <td>Ongoing</td>
               <td>High call volume</td>
+              <Link to="/shift/1256">
+              <AiOutlineEye />
+              </Link>
+              
             </tr>
             <tr>
               <td>5</td>
@@ -96,6 +114,11 @@ const Staff = () => {
               <td>8 hours</td>
               <td>Scheduled</td>
               <td>Project deadline</td>
+
+              <Link to="/shift/1256">
+              <AiOutlineEye />
+              </Link>
+              
             </tr>
           </tbody>
         </table>
