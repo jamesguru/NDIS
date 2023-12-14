@@ -20,6 +20,17 @@ strong{
     margin-right: 10px;
 }
 
+.shift_take_btn{
+    margin: 20px 0px;
+    width: 150px;
+    cursor: pointer;
+    font-weight: 900;
+    border: none;
+    color: #fff;
+    background-color: rgb(24 92 175);
+    padding: 10px;
+}
+
 .add_casenotes{
     display: flex;
     align-items: center;

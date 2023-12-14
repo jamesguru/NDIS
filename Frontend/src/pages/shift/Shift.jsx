@@ -4,7 +4,7 @@ import
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const Shift = () => {
-  const [open,setOpen] = useState(false);
+  const [open,setOpen] = useState(true);
   const handleCaseNotes=() =>{
     setOpen(!open)
   }
@@ -22,6 +22,9 @@ const Shift = () => {
             <strong>ID:</strong>1
           </li>
           <li>
+            <strong>Location: </strong>Delawere Ave, 3:00pm - 11:00pm
+          </li>
+          <li>
             <strong>Date and Time: </strong>2023-12-12 08:00 AM - 04:00 PM
           </li>
           <li>
@@ -37,6 +40,8 @@ const Shift = () => {
             <strong>Notes:</strong> Lunch break at 5:00 PM
           </li>
         </ul>
+
+        <button className="shift_take_btn">Take</button>
       </div>
 
       <div className="shift_casenotes">

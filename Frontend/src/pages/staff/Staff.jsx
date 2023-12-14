@@ -15,7 +15,7 @@ const Staff = () => {
   return (
     <div className="staff">
       <div className="stafftop">
-        <span className="staff_shifts">My Shifts(10)</span>
+        <span className="staff_shifts">All Shifts(10)</span>
 
         <div className="staff_profile">
           <div className="staff_icon">
@@ -62,8 +62,8 @@ const Staff = () => {
         </div>
         <div className="staff_main_card">
           <div className="staff_main_card_date">
-            <span>SUN</span>
-            <span>23</span>
+            <span>TUE</span>
+            <span>24</span>
           </div>
 
           <div className="staff_main_card_info">
@@ -81,8 +81,8 @@ const Staff = () => {
 
         <div className="staff_main_card">
           <div className="staff_main_card_date">
-            <span>SUN</span>
-            <span>23</span>
+            <span>THU</span>
+            <span>01</span>
           </div>
 
           <div className="staff_main_card_info">
@@ -100,7 +100,7 @@ const Staff = () => {
         <div className="staff_main_card">
           <div className="staff_main_card_date">
             <span>SUN</span>
-            <span>23</span>
+            <span>02</span>
           </div>
 
           <div className="staff_main_card_info">
@@ -117,8 +117,8 @@ const Staff = () => {
         </div>
         <div className="staff_main_card">
           <div className="staff_main_card_date">
-            <span>SUN</span>
-            <span>23</span>
+            <span>FRI</span>
+            <span>12</span>
           </div>
 
           <div className="staff_main_card_info">
