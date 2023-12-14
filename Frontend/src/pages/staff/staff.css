@@ -1,6 +1,6 @@
 
 .staff{
-    margin: 5%;
+    margin: 5% 15%;
 }
 .stafftop{
 
@@ -55,6 +55,68 @@
 .staff_icon{
     display: flex;
     align-items: center;
+}
+
+.staff_main_card{
+
+    height: 70px;
+    background-color: #1dbf730f;
+    margin: 10px 0px;
+    border-radius: 5px;
+    border-left: 10px solid rgb(24 92 175);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.staff_main_card_date{
+    display: flex;
+    flex-direction: column;
+    margin:20px;
+    justify-content: center;
+    
+}
+.staff_main_card_date span{
+    font-weight: 900;
+    margin: 2px;
+    font-size: 18px;
+    color: rgb(118, 142, 172);
+    font-family: "Roboto";
+}
+
+.staff_main_card_info{
+display: flex;
+flex-direction: column;
+    
+}
+
+.staff_main_card_info span:nth-child(1){
+
+    font-size: 18px;
+    font-weight: 900;
+
+}
+.staff_main_card_options{
+    height: 30px;
+    width: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin: 20px;
+    cursor: pointer;
+    position: relative;
+}
+.staff_main_card_options_select{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    z-index: 999;
+    padding: 20px;
+    width: 150px;
+    position: absolute;
+    top: -5;
+}
+.staff_main_card_options_select span:hover{
+    color: #AAA;
 }
 
 table{

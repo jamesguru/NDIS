@@ -5,9 +5,12 @@ import { FaUser } from "react-icons/fa";
 import { AiOutlineEye } from 'react-icons/ai';
 const Staff = () => {
   const [profile, setProfile] = useState(false);
+  
   const handleProfile = () => {
     setProfile(!profile);
   };
+
+  
 
   return (
     <div className="staff">
@@ -39,89 +42,99 @@ const Staff = () => {
       </div>
 
       <div className="staff_main">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Date and Time</th>
-              <th>Location</th>
-              <th>Type</th>
-              <th>Duration</th>
-              <th>Status</th>
-              <th>Notes</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>2023-12-12 08:00 AM - 04:00 PM</td>
-              <td>Main Office</td>
-              <td>Morning</td>
-              <td>8 hours</td>
-              <td>Scheduled</td>
-              <td>No special notes</td>
-              <Link to="/shift/1256">
-              <AiOutlineEye />
-              </Link>
-              
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>2023-12-13 01:00 PM - 09:00 PM</td>
-              <td>Warehouse</td>
-              <td>Afternoon</td>
-              <td>8 hours</td>
-              <td>Ongoing</td>
-              <td>Lunch break at 5:00 PM</td>
-              <Link to="/shift/1256">
-              <AiOutlineEye />
-              </Link>
-              
-            </tr>
+        <div className="staff_main_card">
+          <div className="staff_main_card_date">
+            <span>SUN</span>
+            <span>23</span>
+          </div>
 
-            <tr>
-              <td>3</td>
-              <td>2023-12-14 09:00 AM - 05:00 PM</td>
-              <td>Conference Room</td>
-              <td>Morning</td>
-              <td>8 hours</td>
-              <td>Scheduled</td>
-              <td>Team meeting</td>
-              <Link to="/shift/1256">
-              <AiOutlineEye />
-              </Link>
-              
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>2023-12-15 02:00 PM - 10:00 PM</td>
-              <td>Customer Support Center</td>
-              <td>Afternoon</td>
-              <td>8 hours</td>
-              <td>Ongoing</td>
-              <td>High call volume</td>
-              <Link to="/shift/1256">
-              <AiOutlineEye />
-              </Link>
-              
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>2023-12-16 10:00 AM - 06:00 PM</td>
-              <td>Remote Work</td>
-              <td>Morning</td>
-              <td>8 hours</td>
-              <td>Scheduled</td>
-              <td>Project deadline</td>
+          <div className="staff_main_card_info">
+            <span>Delawere Ave, 3:00pm - 11:00pm</span>
+            <span>Notes: Lunch break at 5:00 PM</span>
+          </div>
 
-              <Link to="/shift/1256">
-              <AiOutlineEye />
-              </Link>
-              
-            </tr>
-          </tbody>
-        </table>
+          <div className="staff_main_card_options">
+            <Link to="/shift/12345">
+             <AiOutlineEye size={25} />
+            </Link>
+            
+          </div>
+        </div>
+        <div className="staff_main_card">
+          <div className="staff_main_card_date">
+            <span>SUN</span>
+            <span>23</span>
+          </div>
+
+          <div className="staff_main_card_info">
+            <span>Delawere Ave, 3:00pm - 11:00pm</span>
+            <span>Notes: Lunch break at 5:00 PM</span>
+          </div>
+
+          <div className="staff_main_card_options">
+            <Link to="/shift/12345">
+             <AiOutlineEye size={25} />
+            </Link>
+            
+          </div>
+        </div>
+
+        <div className="staff_main_card">
+          <div className="staff_main_card_date">
+            <span>SUN</span>
+            <span>23</span>
+          </div>
+
+          <div className="staff_main_card_info">
+            <span>Delawere Ave, 3:00pm - 11:00pm</span>
+            <span>Notes: Lunch break at 5:00 PM</span>
+          </div>
+
+          <div className="staff_main_card_options">
+            <Link to="/shift/12345">
+             <AiOutlineEye size={25} />
+            </Link>
+            
+          </div>
+        </div>
+        <div className="staff_main_card">
+          <div className="staff_main_card_date">
+            <span>SUN</span>
+            <span>23</span>
+          </div>
+
+          <div className="staff_main_card_info">
+            <span>Delawere Ave, 3:00pm - 11:00pm</span>
+            <span>Notes: Lunch break at 5:00 PM</span>
+          </div>
+
+          <div className="staff_main_card_options">
+            <Link to="/shift/12345">
+             <AiOutlineEye size={25} />
+            </Link>
+            
+          </div>
+        </div>
+        <div className="staff_main_card">
+          <div className="staff_main_card_date">
+            <span>SUN</span>
+            <span>23</span>
+          </div>
+
+          <div className="staff_main_card_info">
+            <span>Delawere Ave, 3:00pm - 11:00pm</span>
+            <span>Notes: Lunch break at 5:00 PM</span>
+          </div>
+
+          <div className="staff_main_card_options">
+            <Link to="/shift/12345">
+             <AiOutlineEye size={25} />
+            </Link>
+            
+          </div>
+        </div>
+        
+        
       </div>
     </div>
   );
