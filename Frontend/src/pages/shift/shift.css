@@ -65,3 +65,76 @@ strong{
 .shift_casenotes{
     flex: 1;
 }
+
+.shift_clockin_btn{
+    background-color: teal;
+    border: none;
+    color: white;
+    width: 150px;
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 400;
+    margin: 10px 0px;
+}
+
+.shift_clockout_btn{
+    background-color: teal;
+    border: none;
+    color: white;
+    width: 150px;
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+
+  .content {
+    flex: 1; /* Allow the content to expand and fill the available space */
+    padding: 20px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .button-container span{
+    font-weight: 900;
+    color: rgb(241, 84, 84);
+   
+  }
+
+  .button-container button {
+    padding: 10px;
+    background-color: teal;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+   
+  }
+
+  .button-container button:nth-child(3){
+
+    padding: 10px;
+    background-color: rgb(194, 75, 75);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+

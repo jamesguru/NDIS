@@ -10,8 +10,6 @@ const Staff = () => {
     setProfile(!profile);
   };
 
-  
-
   return (
     <div className="staff">
       <div className="stafftop">
@@ -53,6 +51,10 @@ const Staff = () => {
             <span>Notes: Lunch break at 5:00 PM</span>
           </div>
 
+          <div className="shift_status">
+            <span className="shift_status_ongoing">Ongoing</span>
+          </div>
+
           <div className="staff_main_card_options">
             <Link to="/shift/12345">
              <AiOutlineEye size={25} />
@@ -69,6 +71,9 @@ const Staff = () => {
           <div className="staff_main_card_info">
             <span>Delawere Ave, 3:00pm - 11:00pm</span>
             <span>Notes: Lunch break at 5:00 PM</span>
+          </div>
+          <div className="shift_status">
+            <span>Completed</span>
           </div>
 
           <div className="staff_main_card_options">
@@ -90,6 +95,10 @@ const Staff = () => {
             <span>Notes: Lunch break at 5:00 PM</span>
           </div>
 
+          <div className="shift_status">
+            <span>Completed</span>
+          </div>
+
           <div className="staff_main_card_options">
             <Link to="/shift/12345">
              <AiOutlineEye size={25} />
@@ -106,6 +115,9 @@ const Staff = () => {
           <div className="staff_main_card_info">
             <span>Delawere Ave, 3:00pm - 11:00pm</span>
             <span>Notes: Lunch break at 5:00 PM</span>
+          </div>
+          <div className="shift_status">
+            <span>Completed</span>
           </div>
 
           <div className="staff_main_card_options">
@@ -125,7 +137,9 @@ const Staff = () => {
             <span>Delawere Ave, 3:00pm - 11:00pm</span>
             <span>Notes: Lunch break at 5:00 PM</span>
           </div>
-
+          <div className="shift_status">
+            <span>Completed</span>
+          </div>
           <div className="staff_main_card_options">
             <Link to="/shift/12345">
              <AiOutlineEye size={25} />

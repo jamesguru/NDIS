@@ -1,15 +1,61 @@
-import { useState } from "react";
-import 
-"./shift.css";
+import { useState,useEffect } from "react";
+import "./shift.css";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
 const Shift = () => {
   const [open,setOpen] = useState(true);
+  const [hours,setHours] = useState(0);
+  const storedSeconds = parseInt(localStorage.getItem('stopwatchSeconds')) || 0;
+  const [seconds, setSeconds] = useState(storedSeconds);
+  const [isRunning, setIsRunning] = useState(false);
   const handleCaseNotes=() =>{
     setOpen(!open)
   }
+
+  useEffect(() => {
+    let interval;
+
+    if (isRunning) {
+      interval = setInterval(() => {
+        setSeconds((prevSeconds) => {
+          const newSeconds = prevSeconds + 1;
+          localStorage.setItem('stopwatchSeconds', newSeconds.toString());
+          return newSeconds;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [isRunning]);
+
+  const startStopwatch = () => {
+    setIsRunning(true);
+  };
+
+  const stopStopwatch = () => {
+    setIsRunning(false);
+    const hoursWorked = seconds / 3600;
+    setHours(hoursWorked);
+    setSeconds(0);
+  };
+
+  
+
+  const formatTime = (totalSeconds) => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const remainingSeconds = totalSeconds % 60;
+
+    return `${hours}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+  };
+
+
   return (
-    <div className="shift">
+
+    <div className="shift-container">
+
+<div className="shift">
       <Link to="/staff">
         <span className="myshifts_back">
           <FaArrowLeft /> Back
@@ -41,7 +87,9 @@ const Shift = () => {
           </li>
         </ul>
 
-        <button className="shift_take_btn">Take</button>
+        <button className="shift_clockin_btn">Bid</button>
+
+
       </div>
 
       <div className="shift_casenotes">
@@ -87,7 +135,16 @@ const Shift = () => {
         </div>
         }
       </div>
+      
     </div>
+    <div className="button-container">
+    <span>Time: {formatTime(seconds)}</span>
+    <span>Hours Worked: {hours.toFixed(2)}</span>
+    <button className="button" onClick={startStopwatch}>Clock In</button>  
+    <button className="button"onClick={stopStopwatch}>Clock Out</button>
+  </div>
+    </div>
+    
   );
 };
 

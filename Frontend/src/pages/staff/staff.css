@@ -119,6 +119,25 @@ flex-direction: column;
     color: #AAA;
 }
 
+.shift_status_ongoing{
+
+    color: red;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+.shift_status{
+    font-weight: 900;
+    color: teal;
+    cursor: pointer;
+    font-size: 14px;
+}
+
 table{
     width: 100%;
 }
