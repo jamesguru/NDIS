@@ -34,7 +34,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.username });
+    const user = await User.findOne({ email: req.body.email });
     !user && res.status(401).json("You have not registered");
     const hashedPassword = CryptoJs.AES.decrypt(
       user.password,
