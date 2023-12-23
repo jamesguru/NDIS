@@ -8,7 +8,7 @@ const {
   verifyTokenAndAdmin,
   verifyTokenAndAuthorization,
 } = require("../middlewares/verifyToken");
-dotenv.config()
+dotenv.config();
 
 //UPDATE
 

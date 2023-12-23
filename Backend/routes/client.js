@@ -24,6 +24,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// DELETE CLIENT
 
 router.delete("/:id", async (req, res) => {
   try {

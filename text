@@ -4,24 +4,19 @@ import axios from 'axios';
 
 const LocationForm = () => {
   const [locationDetails, setLocationDetails] = useState('');
-
   const handleLocationSubmit = async () => {
     try {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-
           // Use a geocoding service to get location details
           const response = await axios.get(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=YOUR_GOOGLE_MAPS_API_KEY`
           );
-
           const addressComponents = response.data.results[0].address_components;
           const locationName = response.data.results[0].formatted_address;
-
           // Now you can save locationName or addressComponents to state
           setLocationDetails(locationName);
-
           // Send location data to the server (Node.js)
           // Example: axios.post('/api/saveLocation', { location: locationName });
         },
