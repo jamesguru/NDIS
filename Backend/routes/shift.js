@@ -3,7 +3,6 @@ const router = express.Router();
 const Shift = require("../models/Shift");
 
 // ADD SHIFT
-
 router.post("/", async (req, res) => {
   const newShift = Shift(req.body);
   try {
@@ -27,14 +26,14 @@ router.get("/", async (req, res) => {
 
 // GET SHIFT
 router.get("/find/:id", async (req, res) => {
-    const id = req.params.id;
-    try {
+  const id = req.params.id;
+  try {
     const shift = await Shift.findById(id);
-      res.status(200).json(shift);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  });
+    res.status(200).json(shift);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 // DELETE SHIFT
 
@@ -51,14 +50,13 @@ router.delete("/:id", async (req, res) => {
 // ASSIGN SHIFT
 
 router.put("/assign/:id", async (req, res) => {
-
   try {
     const updatedShift = await Shift.findByIdAndUpdate(
-        req.params.id,
-        { $set: req.body },
-        { new: true }
-      );
- 
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+
     res.status(200).json(updatedShift);
   } catch (error) {
     res.status(500).json(error.message);

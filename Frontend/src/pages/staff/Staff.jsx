@@ -25,7 +25,11 @@ const Staff = () => {
 
           {profile && (
             <div className="staff_account">
+
+            <Link to="/myaccount">
               <span>My Account</span>
+              </Link>
+
               <span>My Statements</span>
               <Link to="/myshifts">
                 <span>Shifts</span>
@@ -40,6 +44,8 @@ const Staff = () => {
       </div>
 
       <div className="staff_main">
+
+        <h3 className="shift-header">My shifts</h3>
         <div className="staff_main_card">
           <div className="staff_main_card_date">
             <span>SUN</span>
@@ -83,6 +89,8 @@ const Staff = () => {
             
           </div>
         </div>
+
+        <h3 className="shift-header">Bid shifts</h3>
 
         <div className="staff_main_card">
           <div className="staff_main_card_date">
