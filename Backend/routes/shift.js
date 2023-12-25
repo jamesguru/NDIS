@@ -1,12 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const Shift = require("../models/Shift");
+const { SendShiftAssignmentEmail } = require("../EmailService/ShiftAssignment");
 
 // ADD SHIFT
 router.post("/", async (req, res) => {
   const newShift = Shift(req.body);
   try {
     const shift = await newShift.save();
+    
+    if(req.body.staffEmail){
+      await SendShiftAssignmentEmail(
+        req.body.location,
+        req.body.date,
+        req.body.time,
+        req.body.type,
+        req.body.duration,
+        req.body.client,
+        req.body.staffEmail,
+        req.body.notes
+      );
+    }
+
     res.status(201).json(shift);
   } catch (error) {
     res.status(500).json(error);
@@ -57,6 +72,18 @@ router.put("/assign/:id", async (req, res) => {
       { new: true }
     );
 
+    if(req.body.staffEmail){
+      await SendShiftAssignmentEmail(
+        req.body.location,
+        req.body.date,
+        req.body.time,
+        req.body.type,
+        req.body.duration,
+        req.body.client,
+        req.body.staffEmail,
+        req.body.notes
+      );
+    }
     res.status(200).json(updatedShift);
   } catch (error) {
     res.status(500).json(error.message);
@@ -84,11 +111,11 @@ router.put("/casenote/:id", async (req, res) => {
 // CLOCK IN
 
 router.put("/clockin/:id", async (req, res) => {
-  const { time, location } = req.body;
+  const { time, coords, accuracy } = req.body;
   try {
-    if (time && location) {
+    if (time && coords) {
       const clockin = await Shift.findByIdAndUpdate(req.params.id, {
-        $push: { clockin: { time, location } },
+        $push: { clockin: { time, coords, accuracy } },
       });
       res.status(201).json(clockin);
     } else {
@@ -102,11 +129,11 @@ router.put("/clockin/:id", async (req, res) => {
 //CLOCKOUT
 
 router.put("/clockout/:id", async (req, res) => {
-  const { time, location } = req.body;
+  const { time, coords, accuracy } = req.body;
   try {
-    if (time && location) {
+    if (time && coords) {
       const clockout = await Shift.findByIdAndUpdate(req.params.id, {
-        $push: { clockout: { time, location } },
+        $push: { clockout: { time, coords, accuracy } },
       });
       res.status(201).json(clockout);
     } else {

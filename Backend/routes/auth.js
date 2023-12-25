@@ -3,18 +3,23 @@ const router = express.Router();
 const CryptoJs = require("crypto-js");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const dotenv=require("dotenv");
+const dotenv = require("dotenv");
+const {sendWelcomeEmail}= require("../EmailService/Welcome")
+
 dotenv.config();
 
 // REGISTER
 
 router.post("/register", async (req, res) => {
+  const unsavedPassword = req.body.password;
+
   const newUser = User({
     username: req.body.username,
     email: req.body.email,
     fullname: req.body.fullname,
     phone: req.body.phone,
     address: req.body.address,
+    staffID: req.body.staffID,
     gender: req.body.gender,
     password: CryptoJs.AES.encrypt(
       req.body.password,
@@ -24,6 +29,14 @@ router.post("/register", async (req, res) => {
 
   try {
     const user = await newUser.save();
+   
+      await sendWelcomeEmail(
+        req.body.fullname,
+        req.body.staffID,
+        unsavedPassword,
+        req.body.email
+      );
+
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json(error);

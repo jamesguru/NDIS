@@ -7,15 +7,23 @@ const ShiftSchema = mongoose.Schema(
     type: { type: String, require: true },
     duration: { type: String, require: true },
     client: { type: String, require: true },
-    staffId:{type:String,default:""},
+    staffEmail:{type:String,default:""},
     notes: { type: String },
     clockin: [{
         time:{type:String},
-        location:{type:String},
+        accuracy:{type:Number},
+        coords:{
+          lat:{type:Number},
+          long:{type:Number}
+        },
     }],
     clockout: [{
         time:{type:String},
-        location:{type:String},
+        accuracy:{type:Number},
+        coords:{
+          lat:{type:Number},
+          long:{type:Number}
+        }
     }],
     casenotes: [
       {

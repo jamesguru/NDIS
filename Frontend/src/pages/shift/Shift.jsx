@@ -9,7 +9,8 @@ const Shift = () => {
   const storedSeconds = parseInt(localStorage.getItem("stopwatchSeconds")) || 0;
   const [seconds, setSeconds] = useState(storedSeconds);
   const [isRunning, setIsRunning] = useState(false);
-  const [userLocation, setUserLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState({});
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const handleCaseNotes = () => {
     setOpen(!open);
   };
@@ -54,14 +55,20 @@ const Shift = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const { latitude, longitude, accuracy } = position.coords;
+          const { latitude, longitude, accuracy } = position.coords
           console.log(position)
+          const coords = {"lat":latitude,"long":longitude};
+          setUserLocation(coords)
+          console.log('user location',userLocation)
           if(accuracy > 50){
               console.log('location is likely incorrect')
+              setCurrentTime(new Date().toLocaleTimeString());
+              console.log(currentTime)
+              console.log(typeof(currentTime))
           }else{
             console.log('location is correct')
           }
-          setUserLocation({ lat: latitude, lng: longitude });
+          
         },
         (error) => {
           console.error("Error getting location:", error);

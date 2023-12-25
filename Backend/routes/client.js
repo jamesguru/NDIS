@@ -5,6 +5,7 @@ const Client = require("../models/Client");
 // CREATE
 
 router.post("/", async (req, res) => {
+
   const newClient = Client(req.body);
   try {
     const client = await newClient.save();
