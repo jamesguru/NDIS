@@ -1,14 +1,25 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import "./staff.css";
 import { FaUser } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
 import { AiOutlineEye } from 'react-icons/ai';
+import { logOut } from "../../redux/userRedux";
 const Staff = () => {
   const [profile, setProfile] = useState(false);
-  
+  const dispatch = useDispatch();
+
+const navigate = useNavigate();
+
   const handleProfile = () => {
     setProfile(!profile);
   };
+
+  const handleLogout =()=>{
+    dispatch(logOut())
+    navigate("/login")
+  
+  }
 
   return (
     <div className="staff">
@@ -35,9 +46,9 @@ const Staff = () => {
                 <span>Shifts</span>
               </Link>
 
-              <Link to="/">
-                <span>Logout</span>
-              </Link>
+             
+                <span onClick={handleLogout}>Logout</span>
+              
             </div>
           )}
         </div>

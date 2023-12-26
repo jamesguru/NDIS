@@ -1,13 +1,16 @@
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import { createBrowserRouter,Navigate,RouterProvider } from "react-router-dom";
 import "./index.css";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Admin from "./pages/admin/Admin";
 import Staff from "./pages/staff/Staff";
 import MyShifts from "./pages/MyShifts/MyShifts";
+import { useSelector } from "react-redux";
 import Shift from "./pages/shift/Shift";
 import Account from "./pages/account/Account";
 function App() {
+  const user = useSelector((state) => state.user);
+  
   const router = createBrowserRouter([
  
         {
@@ -25,19 +28,19 @@ function App() {
         },
         {
           path: "/staff",
-          element: <Staff />,
+          element: user.currentUser ? <Staff /> : <Navigate to="/login"/>,
         },
         {
           path: "/myshifts",
-          element: <MyShifts />,
+          element:  user.currentUser ? <MyShifts /> : <Navigate to="/login"/> ,
         },
         {
           path: "/shift/:id",
-          element: <Shift />,
+          element: user.currentUser ? <Shift /> :  <Navigate to="/login"/> ,
         },
         {
           path: "/myaccount",
-          element: <Account />,
+          element: user.currentUser ? <Account /> : <Navigate to="/login"/>,
         }
       
   ]);
