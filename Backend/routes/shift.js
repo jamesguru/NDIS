@@ -32,12 +32,36 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const shifts = await Shift.find();
+    const shifts = await Shift.find().sort({ createdAt: -1 });
     res.status(200).json(shifts);
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
+// GET USERS SHIFT
+router.post("/me", async (req, res) => {
+  
+  try {
+    const shifts = await Shift.find({staffEmail:req.body.email}).sort({ createdAt: -1 });
+    res.status(200).json(shifts);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// GET UNASSIGNED SHIFTS
+
+router.get("/unassigned", async (req, res) => {
+  
+  try {
+    const shiftsNoEmail = await Shift.find({ staffEmail: { $exists: false } }).sort({ createdAt: -1 });
+    res.status(200).json(shiftsNoEmail);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 
 // GET SHIFT
 router.get("/find/:id", async (req, res) => {

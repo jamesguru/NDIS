@@ -1,7 +1,6 @@
 import "./account.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { useSelector } from "react-redux";
-
 import { useDispatch } from 'react-redux';
 import { logOut } from "../../redux/userRedux";
 import { Link,useNavigate} from "react-router-dom";

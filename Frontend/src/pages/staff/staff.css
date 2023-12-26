@@ -63,7 +63,8 @@
 
 .staff_main_card{
 
-    height: 70px;
+    height: auto;
+    padding: 5px;
     background-color: #1dbf730f;
     margin: 10px 0px;
     border-radius: 5px;
@@ -83,9 +84,10 @@
 .staff_main_card_date span{
     font-weight: 900;
     margin: 2px;
-    font-size: 18px;
+    font-size: 22px;
     color: rgb(118, 142, 172);
     font-family: "Roboto";
+    width: 10%;
 }
 
 .staff_main_card_info{
@@ -152,11 +154,16 @@ tr{
 tr:nth-child(even) {
     background-color: #1dbf730f;
   }
+
+  
 td{
 
 }
 th{
     text-align: left;
+}
+.shift-location-time{
+    width: 250px;
 }
 
 /* Responsive Styles */

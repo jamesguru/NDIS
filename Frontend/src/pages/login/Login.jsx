@@ -38,18 +38,22 @@ const Login = () => {
         <form>
           <h2>Login</h2>
           <label htmlFor="username">Staff ID:</label>
+          <div className="password">
           <input
             type="text"
             id="staffID"
             name="staffID"
             onChange={(e) => setStaffID(e.target.value)}
           />
+          </div>
 
           <label htmlFor="password">Password:</label>
-          <input
+         <div className="password">
+         <input
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
+            className="password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <span
@@ -60,8 +64,9 @@ const Login = () => {
             }}
             onClick={handleTogglePassword}
           >
-            {showPassword ? "👁️" : "🔒"}
+            {showPassword ?"🔒":"👁️"}
           </span>
+         </div>
           <span className="login-btn" onClick={handleLogin}>
             {loading ? "loading ..." : "Login"}
             {user.currentUser ? <Navigate to="/staff" /> : ""}

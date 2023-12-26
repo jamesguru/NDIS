@@ -1,19 +1,40 @@
 import { useState, useEffect } from "react";
 import "./shift.css";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { publicRequest } from "../../requestMethods";
 
 const Shift = () => {
   const [open, setOpen] = useState(true);
   const [hours, setHours] = useState(0);
+  const [shift, setShift] = useState({});
   const storedSeconds = parseInt(localStorage.getItem("stopwatchSeconds")) || 0;
   const [seconds, setSeconds] = useState(storedSeconds);
   const [isRunning, setIsRunning] = useState(false);
   const [userLocation, setUserLocation] = useState({});
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString()
+  );
+  const location = useLocation();
+  const shiftId = location.pathname.split("/")[2];
+
   const handleCaseNotes = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    const getActivity = async () => {
+      try {
+        const res = await publicRequest.get("/shifts/find/" + shiftId);
+
+        setShift(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getActivity();
+  }, [shiftId]);
 
   useEffect(() => {
     let interval;
@@ -55,20 +76,19 @@ const Shift = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const { latitude, longitude, accuracy } = position.coords
-          console.log(position)
-          const coords = {"lat":latitude,"long":longitude};
-          setUserLocation(coords)
-          console.log('user location',userLocation)
-          if(accuracy > 50){
-              console.log('location is likely incorrect')
-              setCurrentTime(new Date().toLocaleTimeString());
-              console.log(currentTime)
-              console.log(typeof(currentTime))
-          }else{
-            console.log('location is correct')
+          const { latitude, longitude, accuracy } = position.coords;
+          console.log(position);
+          const coords = { lat: latitude, long: longitude };
+          setUserLocation(coords);
+          console.log("user location", userLocation);
+          if (accuracy > 50) {
+            console.log("location is likely incorrect");
+            setCurrentTime(new Date().toLocaleTimeString());
+            console.log(currentTime);
+            console.log(typeof currentTime);
+          } else {
+            console.log("location is correct");
           }
-          
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -76,7 +96,7 @@ const Shift = () => {
       );
 
       console.log(userLocation);
-      startStopwatch()
+      startStopwatch();
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
@@ -93,29 +113,30 @@ const Shift = () => {
         <div className="shift_details">
           <ul>
             <li>
-              <strong>ID:</strong>1
+              <strong>ID:</strong>{shift._id}
             </li>
             <li>
-              <strong>Location: </strong>Delawere Ave, 3:00pm - 11:00pm
+              <strong>Location: </strong>{shift.location}
             </li>
             <li>
-              <strong>Date and Time: </strong>2023-12-12 08:00 AM - 04:00 PM
+              <strong>Date and Time: </strong>{shift.date} {shift.time}
             </li>
             <li>
-              <strong>Type:</strong> Morning
+              <strong>Type:</strong> {shift.type}
             </li>
             <li>
-              <strong>Duration:</strong> 8 hours
+              <strong>Duration:</strong> {shift.duration}
             </li>
             <li>
               <strong>Status:</strong> Pending
             </li>
             <li>
-              <strong>Notes:</strong> Lunch break at 5:00 PM
+              <strong>Notes:</strong> {shift.notes}
             </li>
           </ul>
 
-          <button className="shift_clockin_btn">Bid</button>
+          {shift.staffEmail ? '' : <button className="shift_clockin_btn">Bid</button>}
+        
         </div>
 
         <div className="shift_casenotes">
