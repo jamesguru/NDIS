@@ -47,6 +47,19 @@ const Staff = () => {
     setProfile(!profile);
   };
 
+
+  const showStatus =(clockIn, clockout)=>{
+
+    if(clockIn.length === 0 && clockout.length === 0){
+      return 'Pending'
+    }else if(clockIn.length > 0 && clockout.length === 0){
+      return 'Ongoing'
+    }else{
+      return 'Completed'
+    }
+
+  }
+
   const handleLogout = () => {
     dispatch(logOut());
     navigate("/login");
@@ -56,7 +69,6 @@ const Staff = () => {
     <div className="staff">
       <div className="stafftop">
         <span className="staff_shifts">All Shifts</span>
-
         <div className="staff_profile">
           <div className="staff_icon">
             <FaUser size={18} color="#444" className="profile_icon" />
@@ -85,7 +97,7 @@ const Staff = () => {
       <div className="staff_main">
         <h3 className="shift-header">My shifts</h3>
         {data.map((shift, index) => (
-          <div className="staff_main_card" key={index}>
+          <div className={shift?.clockin?.length === 0 && shift?.clockout?.length === 0 || shift?.clockin?.length > 0 && shift?.clockout?.length === 0 ? 'staff_main_card' : 'staff_main_card_none'} key={index}>
             <div className="staff_main_card_date">
               <span>{moment(shift.date).format("ddd DD")}</span>
             </div>
@@ -94,11 +106,11 @@ const Staff = () => {
               <span className="shift-location-time">
                 {shift.location}, {shift.time}
               </span>
-              <span className="shift-notes">Date: {shift.date}</span>
+              <span className="shift-notes">Duration: {shift.duration}</span>
             </div>
 
             <div className="shift_status">
-              <span className="shift_status_completed">Ongoing</span>
+              <span className="shift_status_completed">{showStatus(shift.clockin, shift.clockout)}</span>
             </div>
 
             <div className="staff_main_card_options">
@@ -111,7 +123,7 @@ const Staff = () => {
 
         <h3 className="shift-header">Bid shifts</h3>
 
-        {unassignedShifts.map((shift, index) => (
+        {unassignedShifts.slice(0,5).map((shift, index) => (
           <div className="staff_main_card" key={index}>
             <div className="staff_main_card_date">
               <span>{moment(shift.date).format("ddd DD")}</span>
@@ -121,11 +133,11 @@ const Staff = () => {
               <span className="shift-location-time">
                 {shift.location}, {shift.time}
               </span>
-              <span className="shift-notes">Date: {shift.date}</span>
+              <span className="shift-notes">Duration: {shift.duration}</span>
             </div>
 
             <div className="shift_status">
-              <span className="shift_status_completed">Ongoing</span>
+              <span className="shift_status_completed">{showStatus(shift.clockin, shift.clockout)}</span>
             </div>
 
             <div className="staff_main_card_options">

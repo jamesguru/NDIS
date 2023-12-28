@@ -136,6 +136,7 @@ router.put("/casenote/:id", async (req, res) => {
 
 router.put("/clockin/:id", async (req, res) => {
   const { time, coords, accuracy } = req.body;
+  
   try {
     if (time && coords) {
       const clockin = await Shift.findByIdAndUpdate(req.params.id, {

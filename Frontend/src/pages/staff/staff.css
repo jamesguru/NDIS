@@ -73,6 +73,9 @@
     align-items: center;
     justify-content: space-between;
 }
+.staff_main_card_none{
+    display: none;
+}
 
 .staff_main_card_date{
     display: flex;

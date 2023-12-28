@@ -14,7 +14,7 @@ const ShiftSchema = mongoose.Schema(
         accuracy:{type:Number},
         coords:{
           lat:{type:Number},
-          long:{type:Number}
+          lng:{type:Number}
         },
     }],
     clockout: [{
@@ -22,7 +22,7 @@ const ShiftSchema = mongoose.Schema(
         accuracy:{type:Number},
         coords:{
           lat:{type:Number},
-          long:{type:Number}
+          lng:{type:Number}
         }
     }],
     casenotes: [

@@ -3,15 +3,17 @@ import "./shift.css";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { publicRequest } from "../../requestMethods";
-
+import { useSelector } from "react-redux";
 const Shift = () => {
   const [open, setOpen] = useState(true);
   const [hours, setHours] = useState(0);
   const [shift, setShift] = useState({});
+  const user = useSelector((state) => state.user);
   const storedSeconds = parseInt(localStorage.getItem("stopwatchSeconds")) || 0;
   const [seconds, setSeconds] = useState(storedSeconds);
   const [isRunning, setIsRunning] = useState(false);
   const [userLocation, setUserLocation] = useState({});
+  const [accuracy, setAccuracy] = useState(0);
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -72,20 +74,17 @@ const Shift = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-  const handleClockIn = () => {
+  const handleClockIn = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude, accuracy } = position.coords;
-          console.log(position);
-          const coords = { lat: latitude, long: longitude };
+          const coords = { lat: latitude, lng: longitude };
           setUserLocation(coords);
-          console.log("user location", userLocation);
+          setAccuracy(accuracy);
+          setCurrentTime(new Date().toLocaleTimeString());
           if (accuracy > 50) {
             console.log("location is likely incorrect");
-            setCurrentTime(new Date().toLocaleTimeString());
-            console.log(currentTime);
-            console.log(typeof currentTime);
           } else {
             console.log("location is correct");
           }
@@ -95,12 +94,89 @@ const Shift = () => {
         }
       );
 
-      console.log(userLocation);
+      
+      try {
+        if (accuracy && userLocation && currentTime) {
+          await publicRequest.put(`/shifts/clockin/${shiftId}`, {
+            time: currentTime,
+            coords: userLocation,
+            accuracy,
+          });
+
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
       startStopwatch();
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
   };
+
+  const handleClockOut = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude, accuracy } = position.coords;
+          const coords = { lat: latitude, lng: longitude };
+          setUserLocation(coords);
+          setAccuracy(accuracy);
+          setCurrentTime(new Date().toLocaleTimeString());
+          if (accuracy > 50) {
+            console.log("location is likely incorrect");
+          } else {
+            console.log("location is correct");
+          }
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+
+      
+      try {
+        if (accuracy && userLocation && currentTime) {
+          await publicRequest.put(`/shifts/clockout/${shiftId}`, {
+            time: currentTime,
+            coords: userLocation,
+            accuracy,
+          });
+
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+     stopStopwatch()
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
+
+  const handleBid = async() =>{
+    try {
+
+      await publicRequest.put(`/shifts/assign/${shiftId}`,
+        {
+          "location":shift.location,
+          "date":shift.date,
+          "time": shift.time,
+          "type":shift.type,
+          "duration":shift.type,
+          "staffEmail":user.currentUser.email,
+          "client": shift.client,
+          "notes":shift.notes
+      }
+      )
+
+      window.location.reload()
+      
+    } catch (error) {
+      console.log();
+    }
+  }
 
   return (
     <div className="shift-container">
@@ -113,13 +189,16 @@ const Shift = () => {
         <div className="shift_details">
           <ul>
             <li>
-              <strong>ID:</strong>{shift._id}
+              <strong>ID:</strong>
+              {shift._id}
             </li>
             <li>
-              <strong>Location: </strong>{shift.location}
+              <strong>Location: </strong>
+              {shift.location}
             </li>
             <li>
-              <strong>Date and Time: </strong>{shift.date} {shift.time}
+              <strong>Date and Time: </strong>
+              {shift.date} {shift.time}
             </li>
             <li>
               <strong>Type:</strong> {shift.type}
@@ -135,8 +214,11 @@ const Shift = () => {
             </li>
           </ul>
 
-          {shift.staffEmail ? '' : <button className="shift_clockin_btn">Bid</button>}
-        
+          {shift.staffEmail ? (
+            ""
+          ) : (
+            <button className="shift_clockin_btn" onClick={handleBid}>Bid</button>
+          )}
         </div>
 
         <div className="shift_casenotes">
@@ -186,12 +268,16 @@ const Shift = () => {
       <div className="button-container">
         <span>Time: {formatTime(seconds)}</span>
         <span>Hours Worked: {hours.toFixed(2)}</span>
-        <button className="button" onClick={handleClockIn}>
-          Clock In
-        </button>
-        <button className="button" onClick={stopStopwatch}>
-          Clock Out
-        </button>
+        {shift?.clockin?.length === 0 && shift.staffEmail && (
+          <button className="button" onClick={handleClockIn}>
+            Clock In
+          </button>
+        )}
+        {shift?.clockout?.length === 0 && shift.staffEmail && (
+          <button className="button" onClick={handleClockOut}>
+            Clock Out
+          </button>
+        )}
       </div>
     </div>
   );
