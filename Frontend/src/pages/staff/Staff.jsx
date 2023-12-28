@@ -82,8 +82,9 @@ const Staff = () => {
               <Link to="/myaccount">
                 <span>My Account</span>
               </Link>
-
+              <Link to="/statements">
               <span>My Statements</span>
+              </Link>
               <Link to="/myshifts">
                 <span>Shifts</span>
               </Link>

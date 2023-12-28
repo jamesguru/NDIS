@@ -8,6 +8,7 @@ import MyShifts from "./pages/MyShifts/MyShifts";
 import { useSelector } from "react-redux";
 import Shift from "./pages/shift/Shift";
 import Account from "./pages/account/Account";
+import Statement from "./pages/statement/Statement";
 function App() {
   const user = useSelector((state) => state.user);
   
@@ -41,7 +42,13 @@ function App() {
         {
           path: "/myaccount",
           element: user.currentUser ? <Account /> : <Navigate to="/login"/>,
+        },
+
+        {
+          path: "/statements",
+          element: user.currentUser ? <Statement /> : <Navigate to="/login"/>,
         }
+      
       
   ]);
 
