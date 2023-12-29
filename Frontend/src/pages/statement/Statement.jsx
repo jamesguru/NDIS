@@ -1,8 +1,6 @@
-
+import './statement.css';
 import { PieChart } from 'react-minimal-pie-chart';
-
 const Statement = () => {
-  // Mock data for shifts
   const shifts = [
     { id: 1, date: '2023-01-15', hours: 8, rate: 15.5, location: 'Main Office' },
     // Add more shift data as needed
@@ -10,13 +8,6 @@ const Statement = () => {
 
   // Calculate total earnings
   const totalEarnings = shifts.reduce((total, shift) => total + shift.hours * shift.rate, 0);
-
-  // Mock data for upcoming payment
-  const upcomingPayment = {
-    date: '2023-01-30',
-    amount: 500, // Replace with actual upcoming payment amount
-  };
-
   // Mock data for additional details
   const additionalDetails = {
     deductions: 50,
@@ -24,26 +15,37 @@ const Statement = () => {
     taxes: 20,
     netEarnings: totalEarnings - 50 + 100 - 20,
   };
+return (
+  <div className='statements'>
+      <h1 className='statement-header-head'>Statements</h1>
+      <div className="statement-wrapper">
+        <div className="statement-card">
 
-  return (
-    <div style={styles.container}>
-      <h1>Statement</h1>
+          <div className="statement-donut-all">
+              <span className="statement-header">500</span>
+          </div>
+              <span className="statement-info">All Shifts</span>
+        </div>
+        <div className="statement-card">
 
-      <div style={styles.card}>
-        <h2>Shifts Completed</h2>
-        <ul>
-          {shifts.map((shift) => (
-            <li key={shift.id}>
-              {shift.date} - {shift.hours} hours at {shift.location}
-            </li>
-          ))}
-        </ul>
+          <div className="statement-donut-completed">
+              <span className="statement-header">20</span>
+          </div>
+              <span className="statement-info">Completed Shifts</span>
+        </div>
+        <div className="statement-card">
+
+          <div className="statement-donut-pending">
+              <span className="statement-header">25</span>
+          </div>
+              <span className="statement-info">Pending Shifts</span>
+        </div>
       </div>
 
-      <div style={styles.card}>
-        <h2>Earnings</h2>
-        <p>Total Earnings: ${totalEarnings.toFixed(2)}</p>
-        <div style={styles.chartContainer}>
+      <div className="statement-report">
+
+        <button className="statement-report-btn">Send report</button>
+        <div className='piechart-card'>
           <PieChart
             data={[
               { title: 'Net Earnings', value: additionalDetails.netEarnings, color: '#4CAF50' },
@@ -54,42 +56,23 @@ const Statement = () => {
             animate
           />
         </div>
+        <div className='report_main_card'>
+            <span>Pending Balance</span>
+            <h2>$ 2000</h2>
+            
       </div>
 
-      <div style={styles.card}>
-        <h2>Upcoming Payment</h2>
-        <p>Date: {upcomingPayment.date}</p>
-        <p>Amount: ${upcomingPayment.amount.toFixed(2)}</p>
+      <div className='report_main_card'>
+            <span>Total Earned</span>
+            <h2>$ 200000</h2>
+            
       </div>
 
-      {/* Add more cards for other details about the shift as needed */}
-    </div>
-  );
-};
+      </div>
 
-const styles = {
-  container: {
-    maxWidth: '800px',
-    margin: '5%',
-    padding: '20px',
-    fontFamily: 'Arial, sans-serif',
-    display:'flex',
-    flexWrap:'wrap',
-   
-  },
-  card: {
-    marginBottom: '20px',
-    padding: '20px',
-    height:'400px',
-    width:'300px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#fff',
-  },
-  chartContainer: {
-    textAlign: 'center',
-    marginTop: '20px',
-  },
+      
+  </div>
+);
 };
 
 export default Statement;
