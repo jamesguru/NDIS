@@ -10,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const Login = () => {
       } catch (error) {
         setLoading(false);
         // Handle login error (e.g., display an error message)
-        console.error("Login error:", error);
+        setError('You have entered wrong password or staffID.')
       }
     }
   };
@@ -39,38 +40,39 @@ const Login = () => {
           <h2>Login</h2>
           <label htmlFor="username">Staff ID:</label>
           <div className="password">
-          <input
-            type="text"
-            id="staffID"
-            name="staffID"
-            onChange={(e) => setStaffID(e.target.value)}
-          />
+            <input
+              type="text"
+              id="staffID"
+              name="staffID"
+              onChange={(e) => setStaffID(e.target.value)}
+            />
           </div>
 
           <label htmlFor="password">Password:</label>
-         <div className="password">
-         <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            name="password"
-            className="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <span
-            style={{
-              display: "inline",
-              cursor:"pointer",
-              fontSize:"20px"
-            }}
-            onClick={handleTogglePassword}
-          >
-            {showPassword ?"🔒":"👁️"}
-          </span>
-         </div>
+          <div className="password">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              className="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span
+              style={{
+                display: "inline",
+                cursor: "pointer",
+                fontSize: "20px",
+              }}
+              onClick={handleTogglePassword}
+            >
+              {showPassword ? "🔒" : "👁️"}
+            </span>
+          </div>
           <span className="login-btn" onClick={handleLogin}>
             {loading ? "loading ..." : "Login"}
             {user.currentUser ? <Navigate to="/staff" /> : ""}
           </span>
+          {error && <span style={{color:'red'}}>{error}</span>}
         </form>
       </div>
 

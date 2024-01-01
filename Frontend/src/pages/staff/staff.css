@@ -77,6 +77,18 @@
     display: none;
 }
 
+.staff_main_card_unassigned{
+    height: auto;
+    padding: 5px;
+    background-color: #1dbf730f;
+    margin: 10px 0px;
+    border-radius: 5px;
+    border-left: 7px solid #a5a5c6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .staff_main_card_date{
     display: flex;
     flex-direction: column;

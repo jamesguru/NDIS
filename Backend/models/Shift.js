@@ -27,8 +27,7 @@ const ShiftSchema = mongoose.Schema(
     }],
     casenotes: [
       {
-        date: {type:String},
-        time: { type: String },
+        time: {type:String},
         event: { type: String },
         notes: { type: String },
       },

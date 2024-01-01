@@ -55,7 +55,7 @@ router.post("/me", async (req, res) => {
 router.get("/unassigned", async (req, res) => {
   
   try {
-    const shiftsNoEmail = await Shift.find({ staffEmail: { $exists: false } }).sort({ createdAt: -1 });
+    const shiftsNoEmail = await Shift.find({ staffEmail:''}).sort({ createdAt: -1 });
     res.status(200).json(shiftsNoEmail);
   } catch (error) {
     res.status(500).json(error);
@@ -117,11 +117,12 @@ router.put("/assign/:id", async (req, res) => {
 // ADD CASE NOTES
 
 router.put("/casenote/:id", async (req, res) => {
-  const { event, date, time, notes } = req.body;
+  const { event, time, notes } = req.body;
+  console.log("hey case notes", event, time,notes)
   try {
-    if (event && date && time && notes) {
+    if (event && time && notes) {
       const caseNote = await Shift.findByIdAndUpdate(req.params.id, {
-        $push: { casenotes: { event, date, time, notes } },
+        $push: { casenotes: { event, time, notes } },
       });
       res.status(201).json(caseNote);
     } else {

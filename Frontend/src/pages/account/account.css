@@ -6,6 +6,24 @@
 .myaccount hr {
   width: 50%;
 }
+
+.myaccount-container{
+  display: flex;
+ 
+}
+.myaccount-left{
+
+  display: flex;
+  flex-direction: column;
+}
+.myaccount-right{
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  
+}
+
+
 .update-myaccount {
   border: none;
   width: 250px;

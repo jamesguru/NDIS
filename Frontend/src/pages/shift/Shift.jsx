@@ -4,16 +4,27 @@ import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { publicRequest } from "../../requestMethods";
 import { useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "rgb(24 92 175)",
+};
 const Shift = () => {
   const [open, setOpen] = useState(true);
-  const [hours, setHours] = useState(0);
+  
   const [shift, setShift] = useState({});
+  let [loading, setLoading] = useState(false);
+  const [time, setTime] = useState(null);
   const user = useSelector((state) => state.user);
-  const storedSeconds = parseInt(localStorage.getItem("stopwatchSeconds")) || 0;
-  const [seconds, setSeconds] = useState(storedSeconds);
-  const [isRunning, setIsRunning] = useState(false);
+  
+  
+  
   const [userLocation, setUserLocation] = useState({});
   const [accuracy, setAccuracy] = useState(0);
+  const [event, setEvent] = useState("");
+  const [notes, setNotes] = useState("");
+
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -27,53 +38,27 @@ const Shift = () => {
   useEffect(() => {
     const getActivity = async () => {
       try {
+        setLoading(true);
         const res = await publicRequest.get("/shifts/find/" + shiftId);
 
         setShift(res.data);
+
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
 
     getActivity();
   }, [shiftId]);
 
-  useEffect(() => {
-    let interval;
+  
+  
 
-    if (isRunning) {
-      interval = setInterval(() => {
-        setSeconds((prevSeconds) => {
-          const newSeconds = prevSeconds + 1;
-          localStorage.setItem("stopwatchSeconds", newSeconds.toString());
-          return newSeconds;
-        });
-      }, 1000);
-    }
+  
 
-    return () => clearInterval(interval);
-  }, [isRunning]);
-
-  const startStopwatch = () => {
-    setIsRunning(true);
-  };
-
-  const stopStopwatch = () => {
-    setIsRunning(false);
-    const hoursWorked = seconds / 3600;
-    setHours(hoursWorked);
-    setSeconds(0);
-  };
-
-  const formatTime = (totalSeconds) => {
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const remainingSeconds = totalSeconds % 60;
-
-    return `${hours}:${String(minutes).padStart(2, "0")}:${String(
-      remainingSeconds
-    ).padStart(2, "0")}`;
-  };
+  
   const handleClockIn = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -94,7 +79,6 @@ const Shift = () => {
         }
       );
 
-      
       try {
         if (accuracy && userLocation && currentTime) {
           await publicRequest.put(`/shifts/clockin/${shiftId}`, {
@@ -108,7 +92,7 @@ const Shift = () => {
       } catch (error) {
         console.log(error);
       }
-      startStopwatch();
+      
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
@@ -134,7 +118,6 @@ const Shift = () => {
         }
       );
 
-      
       try {
         if (accuracy && userLocation && currentTime) {
           await publicRequest.put(`/shifts/clockout/${shiftId}`, {
@@ -148,38 +131,63 @@ const Shift = () => {
       } catch (error) {
         console.log(error);
       }
-     stopStopwatch()
+     
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
   };
 
-
-  const handleBid = async() =>{
+  const handleBid = async () => {
     try {
+      await publicRequest.put(`/shifts/assign/${shiftId}`, {
+        location: shift.location,
+        date: shift.date,
+        time: shift.time,
+        type: shift.type,
+        duration: shift.type,
+        staffEmail: user.currentUser.email,
+        client: shift.client,
+        notes: shift.notes,
+      });
 
-      await publicRequest.put(`/shifts/assign/${shiftId}`,
-        {
-          "location":shift.location,
-          "date":shift.date,
-          "time": shift.time,
-          "type":shift.type,
-          "duration":shift.type,
-          "staffEmail":user.currentUser.email,
-          "client": shift.client,
-          "notes":shift.notes
-      }
-      )
-
-      window.location.reload()
-      
+      window.location.reload();
     } catch (error) {
       console.log();
     }
-  }
+  };
+
+  const handleAddNotes = async () => {
+    const now = new Date();
+    setTime(now.toLocaleString());
+
+    if (time && event && notes) {
+      try {
+        await publicRequest.put(`/shifts/casenote/${shiftId}`, {
+          event,
+          notes,
+          time,
+        });
+
+        setEvent("");
+        setNotes("");
+
+        window.location.reload();
+      } catch (error) {
+        console.log("helooo");
+      }
+    }
+  };
 
   return (
     <div className="shift-container">
+      <ClipLoader
+        color={"rgb(24 92 175)"}
+        loading={loading}
+        cssOverride={override}
+        size={70}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
       <div className="shift">
         <Link to="/staff">
           <span className="myshifts_back">
@@ -217,7 +225,9 @@ const Shift = () => {
           {shift.staffEmail ? (
             ""
           ) : (
-            <button className="shift_clockin_btn" onClick={handleBid}>Bid</button>
+            <button className="shift_bid_btn" onClick={handleBid}>
+              Bid
+            </button>
           )}
         </div>
 
@@ -229,24 +239,13 @@ const Shift = () => {
               <th>Notes</th>
             </tr>
 
-            <tr>
-              <td>2023-12-12 04:00 PM</td>
-              <td>Sickness</td>
-              <td>
-                The employee reported feeling unwell during the shift and
-                requested a break to rest. A 15-minute break was provided, and
-                the employee resumed duties afterward.{" "}
-              </td>
-            </tr>
-            <tr>
-              <td>2023-12-12 08:00 AM</td>
-              <td>Head Home</td>
-              <td>
-                The employee reported feeling unwell during the shift and
-                requested a break to rest. A 15-minute break was provided, and
-                the employee resumed duties afterward.{" "}
-              </td>
-            </tr>
+            {shift?.casenotes?.length ? shift?.casenotes?.map((casenote, index) => (
+              <tr key={index}>
+                <td>{casenote.time}</td>
+                <td>{casenote.event}</td>
+                <td>{casenote.notes}</td>
+              </tr>
+            )): <h3>No case notes Added</h3>}
           </table>
 
           <div className="add_casenotes">
@@ -257,27 +256,38 @@ const Shift = () => {
           {open && (
             <div className="casenotes_inputs">
               <label htmlFor="">Case</label>
-              <input type="text" />
+              <input type="text" onChange={(e) => setEvent(e.target.value)} />
               <label htmlFor="">Notes</label>
-              <textarea name="" id="" cols="30" rows="10"></textarea>
-              <button>Submit</button>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                onChange={(e) => setNotes(e.target.value)}
+              ></textarea>
+              <button onClick={handleAddNotes}>Submit</button>
             </div>
           )}
         </div>
       </div>
       <div className="button-container">
-        <span>Time: {formatTime(seconds)}</span>
-        <span>Hours Worked: {hours.toFixed(2)}</span>
+
+       
+          <button className="shift_report_btn">Report</button>
+       
+        
+        <div className="clockin_out">
         {shift?.clockin?.length === 0 && shift.staffEmail && (
-          <button className="button" onClick={handleClockIn}>
+          <button className="shift_clockin_btn" onClick={handleClockIn}>
             Clock In
           </button>
         )}
         {shift?.clockout?.length === 0 && shift.staffEmail && (
-          <button className="button" onClick={handleClockOut}>
+          <button className="shift_clockout_btn" onClick={handleClockOut}>
             Clock Out
           </button>
         )}
+        </div>
       </div>
     </div>
   );

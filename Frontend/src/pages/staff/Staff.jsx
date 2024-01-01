@@ -7,37 +7,51 @@ import { useDispatch } from "react-redux";
 import { AiOutlineEye } from "react-icons/ai";
 import { logOut } from "../../redux/userRedux";
 import { useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 import { publicRequest } from "../../requestMethods";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "rgb(24 92 175)",
+};
 const Staff = () => {
   const user = useSelector((state) => state.user);
   const [profile, setProfile] = useState(false);
   const [data, setData] = useState([]);
   const [unassignedShifts, setUnassignedShifts] = useState([]);
   const dispatch = useDispatch();
+  let [loading, setLoading] = useState(false);
+ 
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const getShifts = async () => {
       try {
+        setLoading(true)
         const res = await publicRequest.post("/shifts/me", {
           email: user.currentUser.email,
         });
         setData(res.data);
+        setLoading(false)
       } catch (error) {
         console.log(error);
+        setLoading(false)
       }
     };
     getShifts();
   }, []);
 
   useEffect(() => {
-    const getShifts = async () => {
+    const getShifts = async () => {     
       try {
+        setLoading(true)
         const res = await publicRequest.get("/shifts/unassigned");
         setUnassignedShifts(res.data);
+        setLoading(false)
       } catch (error) {
         console.log(error);
+        setLoading(false)
       }
     };
     getShifts();
@@ -97,6 +111,14 @@ const Staff = () => {
 
       <div className="staff_main">
         <h3 className="shift-header">My shifts</h3>
+        <ClipLoader
+        color={"rgb(24 92 175)"}
+        loading={loading}
+        cssOverride={override}
+        size={70}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
         {data.map((shift, index) => (
           <div className={shift?.clockin?.length === 0 && shift?.clockout?.length === 0 || shift?.clockin?.length > 0 && shift?.clockout?.length === 0 ? 'staff_main_card' : 'staff_main_card_none'} key={index}>
             <div className="staff_main_card_date">
@@ -111,7 +133,7 @@ const Staff = () => {
             </div>
 
             <div className="shift_status">
-              <span className="shift_status_completed">{showStatus(shift.clockin, shift.clockout)}</span>
+              <span className={shift?.clockin?.length > 0 && shift?.clockout?.length === 0 ? "shift_status_ongoing": "shift_status_completed"}>{showStatus(shift.clockin, shift.clockout)}</span>
             </div>
 
             <div className="staff_main_card_options">
@@ -119,13 +141,21 @@ const Staff = () => {
                 <AiOutlineEye size={25} />
               </Link>
             </div>
+           
           </div>
         ))}
 
         <h3 className="shift-header">Bid shifts</h3>
-
+        <ClipLoader
+         color={"rgb(24 92 175)"}
+        loading={loading}
+        cssOverride={override}
+        size={70}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
         {unassignedShifts.slice(0,5).map((shift, index) => (
-          <div className="staff_main_card" key={index}>
+          <div className={shift.shiftEmail ? 'staff_main_card': 'staff_main_card_unassigned'} key={index}>
             <div className="staff_main_card_date">
               <span>{moment(shift.date).format("ddd DD")}</span>
             </div>

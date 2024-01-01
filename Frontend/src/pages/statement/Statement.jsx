@@ -58,8 +58,7 @@ return (
         </div>
         <div className='report_main_card'>
             <span>Pending Balance</span>
-            <h2>$ 2000</h2>
-            
+            <h2>$ 2000</h2>       
       </div>
 
       <div className='report_main_card'>
