@@ -100,7 +100,10 @@ const Staff = () => {
               <span>My Statements</span>
               </Link>
               <Link to="/myshifts">
-                <span>Shifts</span>
+                <span>My Shifts</span>
+              </Link>
+              <Link to="/report">
+                <span>Report incidence</span>
               </Link>
 
               <span onClick={handleLogout}>Logout</span>

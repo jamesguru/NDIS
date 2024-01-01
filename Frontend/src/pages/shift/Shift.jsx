@@ -12,14 +12,10 @@ const override = {
 };
 const Shift = () => {
   const [open, setOpen] = useState(true);
-  
   const [shift, setShift] = useState({});
   let [loading, setLoading] = useState(false);
   const [time, setTime] = useState(null);
   const user = useSelector((state) => state.user);
-  
-  
-  
   const [userLocation, setUserLocation] = useState({});
   const [accuracy, setAccuracy] = useState(0);
   const [event, setEvent] = useState("");
@@ -53,12 +49,6 @@ const Shift = () => {
     getActivity();
   }, [shiftId]);
 
-  
-  
-
-  
-
-  
   const handleClockIn = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -92,7 +82,6 @@ const Shift = () => {
       } catch (error) {
         console.log(error);
       }
-      
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
@@ -131,7 +120,6 @@ const Shift = () => {
       } catch (error) {
         console.log(error);
       }
-     
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
@@ -239,13 +227,17 @@ const Shift = () => {
               <th>Notes</th>
             </tr>
 
-            {shift?.casenotes?.length ? shift?.casenotes?.map((casenote, index) => (
-              <tr key={index}>
-                <td>{casenote.time}</td>
-                <td>{casenote.event}</td>
-                <td>{casenote.notes}</td>
-              </tr>
-            )): <h3>No case notes Added</h3>}
+            {shift?.casenotes?.length ? (
+              shift?.casenotes?.map((casenote, index) => (
+                <tr key={index}>
+                  <td>{casenote.time}</td>
+                  <td>{casenote.event}</td>
+                  <td>{casenote.notes}</td>
+                </tr>
+              ))
+            ) : (
+              <h3>No case notes Added</h3>
+            )}
           </table>
 
           <div className="add_casenotes">
@@ -271,22 +263,21 @@ const Shift = () => {
         </div>
       </div>
       <div className="button-container">
+        <Link to="/report">
+          <button className="shift_report_btn">Report Incidence</button>
+        </Link>
 
-       
-          <button className="shift_report_btn">Report</button>
-       
-        
         <div className="clockin_out">
-        {shift?.clockin?.length === 0 && shift.staffEmail && (
-          <button className="shift_clockin_btn" onClick={handleClockIn}>
-            Clock In
-          </button>
-        )}
-        {shift?.clockout?.length === 0 && shift.staffEmail && (
-          <button className="shift_clockout_btn" onClick={handleClockOut}>
-            Clock Out
-          </button>
-        )}
+          {shift?.clockin?.length === 0 && shift.staffEmail && (
+            <button className="shift_clockin_btn" onClick={handleClockIn}>
+              Clock In
+            </button>
+          )}
+          {shift?.clockout?.length === 0 && shift.staffEmail && (
+            <button className="shift_clockout_btn" onClick={handleClockOut}>
+              Clock Out
+            </button>
+          )}
         </div>
       </div>
     </div>
