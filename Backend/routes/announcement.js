@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const Announcement = require("../models/Announcement");
+const announcementEmail = require("../EmailService/Announcement");
 
 router.post("/", async (req, res) => {
     const newAnnouncement = Announcement(req.body);
+    await announcementEmail(req.body.title,req.body.description)
     try {
       const announcement = await newAnnouncement.save();     
       res.status(201).json(announcement);
+    
     } catch (error) {
       res.status(500).json(error);
     }
