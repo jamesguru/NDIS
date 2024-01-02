@@ -1,7 +1,7 @@
 .shift{
     margin: 3% 10%;
-    display: flex;
-   
+    display: flex;  
+    height: auto;
 }
 
 .shift_details{
@@ -34,9 +34,7 @@ strong{
 .add_casenotes{
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    
-   
+    justify-content: flex-end;  
 }
 .add_casenotes span{
    
@@ -137,3 +135,16 @@ strong{
     font-weight: 900;
   
 }
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+    .shift{
+        margin: 0%;
+        display: flex;
+        flex-direction: column;
+    }
+    .shift_casenotes{
+        height: 400px;
+        padding: 20px;
+    }
+  }

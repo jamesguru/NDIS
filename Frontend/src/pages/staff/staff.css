@@ -182,14 +182,9 @@ th{
 }
 
 /* Responsive Styles */
-@media only screen and (max-width: 600px) {
-    th, td {
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
+@media only screen and (max-width: 768px) {
+    .staff{
+        margin: 20px;
     }
-    th, td {
-      text-align: center;
-    }
-  }
-
+    /* Add more responsive adjustments as needed */
+}

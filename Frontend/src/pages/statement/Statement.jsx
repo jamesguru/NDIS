@@ -1,5 +1,7 @@
 import './statement.css';
 import { PieChart } from 'react-minimal-pie-chart';
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const Statement = () => {
   const shifts = [
     { id: 1, date: '2023-01-15', hours: 8, rate: 15.5, location: 'Main Office' },
@@ -17,6 +19,11 @@ const Statement = () => {
   };
 return (
   <div className='statements'>
+    <Link to="/staff">
+        <span className="myshifts_back">
+          <FaArrowLeft /> Back
+        </span>
+      </Link>
       <h1 className='statement-header-head'>Statements</h1>
       <div className="statement-wrapper">
         <div className="statement-card">

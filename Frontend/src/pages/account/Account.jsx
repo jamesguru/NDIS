@@ -85,13 +85,13 @@ const Account = () => {
 
         <div className="myaccount-right">
           <label htmlFor="">Change Password</label>
-
           <input
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={handlePasswordChange}
             placeholder="**************"
           />
+
           <span
             style={{
               display: "inline",

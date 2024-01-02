@@ -8,7 +8,6 @@ import { publicRequest } from "../../requestMethods";
 
 const Shifts = () => {
   const [loading, setLoading] = useState(false);
-
   const [data, setData] = useState([]);
   const user = useSelector((state) => state.user);
   useEffect(() => {

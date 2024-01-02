@@ -30,3 +30,14 @@
     font-weight: 900;
     width: 200px;
 }
+
+@media only screen and (max-width: 768px) {
+    .report{
+        margin: 10px;
+    }
+    .report textarea{
+        margin: 20px 0px;
+        width: 80%;
+    }
+    
+  }
